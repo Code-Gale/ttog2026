@@ -16,9 +16,9 @@ Replace `your-domain.com` everywhere with your real domain.
 ## 1. App directory
 
 ```bash
-sudo mkdir -p /var/www/tomtom-of-gala
-sudo chown -R $USER:$USER /var/www/tomtom-of-gala
-cd /var/www/tomtom-of-gala
+sudo mkdir -p /var/www/ttog2026
+sudo chown -R $USER:$USER /var/www/ttog2026
+cd /var/www/ttog2026
 # clone or upload the project here
 ```
 
@@ -74,10 +74,12 @@ chmod 755 server/uploads
 From the project root:
 
 ```bash
-cd /var/www/tomtom-of-gala
+cd /var/www/ttog2026
 npm install
 npm run build
 npm --workspace server run build
+# confirms API entry exists:
+ls server/dist/index.js
 ```
 
 That produces:
@@ -96,20 +98,22 @@ module.exports = {
   apps: [
     {
       name: 'tomtom-web',
-      cwd: '/var/www/tomtom-of-gala',
+      cwd: '/var/www/ttog2026',
       script: 'node_modules/next/dist/bin/next',
       args: 'start -H 127.0.0.1 -p 4075',
       env: { NODE_ENV: 'production' },
     },
     {
       name: 'tomtom-api',
-      cwd: '/var/www/tomtom-of-gala/server',
+      cwd: '/var/www/ttog2026/server',
       script: 'dist/index.js',
       env: { NODE_ENV: 'production' },
     },
   ],
 };
 ```
+
+Build the API **before** starting PM2 (`server/dist/index.js` must exist).
 
 Start and persist:
 
@@ -199,7 +203,7 @@ sudo ufw enable
 ## 8. Deploy updates
 
 ```bash
-cd /var/www/tomtom-of-gala
+cd /var/www/ttog2026
 git pull   # or upload new files
 npm install
 npm run build

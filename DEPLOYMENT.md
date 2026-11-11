@@ -29,17 +29,19 @@ cd /var/www/ttog2026
 ### Frontend — `.env.local` (project root)
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-domain.com/api
+NEXT_PUBLIC_API_URL=https://ttog26.bcthq.com/api
 ```
 
 `NEXT_PUBLIC_*` values are baked in at **build** time. Change this before `npm run build`, then rebuild if you change it later.
+
+Use the **exact** live hostname (this project’s domain is `ttog26.bcthq.com`, not `ttog2026`).
 
 ### Backend — `server/.env`
 
 ```env
 PORT=4076
 NODE_ENV=production
-CLIENT_ORIGIN=https://your-domain.com
+CLIENT_ORIGIN=https://ttog26.bcthq.com
 MONGODB_URI=mongodb://127.0.0.1:27017/tomtom-gala
 PAYSTACK_SECRET_KEY=sk_live_or_test_...
 PAYSTACK_PUBLIC_KEY=pk_live_or_test_...
@@ -53,7 +55,7 @@ SMTP_SECURE=true
 SMTP_USER=youraddress@gmail.com
 SMTP_PASS=your_google_app_password
 EMAIL_FROM="TomTom of Gala <youraddress@gmail.com>"
-PUBLIC_SITE_URL=https://your-domain.com
+PUBLIC_SITE_URL=https://ttog26.bcthq.com
 ```
 
 Notes:

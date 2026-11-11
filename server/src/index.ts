@@ -13,17 +13,22 @@ import { isProduction } from './config.js';
 const app = express();
 app.disable('x-powered-by');
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' }, contentSecurityPolicy: isProduction ? undefined : false }));
-const allowedOrigins = new Set([
-  config.CLIENT_ORIGIN,
-  config.PUBLIC_SITE_URL,
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-  'http://192.168.100.168:3000',
-].filter(Boolean));
+const allowedOrigins = new Set(
+  [
+    config.CLIENT_ORIGIN,
+    config.PUBLIC_SITE_URL,
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://192.168.100.168:3000',
+    'https://ttog26.bcthq.com',
+  ]
+    .filter(Boolean)
+    .map((origin) => origin.replace(/\/$/, '')),
+);
 app.use(cors({
   origin(origin, callback) {
-    if (!origin || allowedOrigins.has(origin)) return callback(null, true);
-    return callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    if (!origin || allowedOrigins.has(origin.replace(/\/$/, ''))) return callback(null, true);
+    return callback(null, false);
   },
   methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
